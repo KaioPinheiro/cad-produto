@@ -1,0 +1,86 @@
+<h1 class="mt-4">Cadastro de Produtos</h1>
+<ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Consulta</li>
+</ol>
+<div class="container">
+
+    <form #consultaForm="ngForm" (submit)="consultar()">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="inputNome">Nome Produto:</label>
+                <input type="text"  [(ngModel)]="nome" 
+                       name="nome" class="form-control"
+                       id="inputNome">
+            </div>
+
+        <br />
+
+            <div class="col-md-12">
+                <br />
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-search"></i> Consultar
+                </button>
+
+                <button type="button" 
+                        routerLink="/produtos-form/form"
+                        class="btn btn-warning ml-1">
+                    <i class="fa fa-plus"></i> Novo
+                </button>
+            </div>
+        </div>
+</form>
+
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>User</th>
+                        <th>Data Cadastro</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let produto of produtos" >
+                        <td>{{ produto.id }}</td>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.quantidade }}</td>
+                        <td>{{ produto.user }}</td>
+                        <td>{{ produto.dataCadastro }}</td>
+                        <td>
+                            <button class= "btn btn-primary" (click)="preparaBaixa(produto)" 
+                            data-toggle="modal" data-target="#modalEditProduto">
+                            <i class="fa fa-arrow-alt-circle-down"></i>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="modalEditProduto" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Confirmação</h4>
+            </div>
+
+            <div class="modal-body" *ngIf="produtoSelecionado">
+                Confirma a retirada de 1 unidade do produto: {{ produtoSelecionado.nome }}?
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-success" (click)="baixaProduto()"  
+                        data-dismiss="modal">Confirmar</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
